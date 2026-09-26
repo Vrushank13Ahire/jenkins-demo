@@ -1,29 +1,31 @@
-pipeline {
-  agent any 
+pipeline{
+  agent any
+  environment {
+    APP_ENV = 'test'
+  }
   stages {
-    stage ('Build') {
+    stage('Checkout') {
       steps {
-        echo "Building"
+        checkout scm
       }
     }
-    stage ('Approve'){
-      steps{
-        input message: "Do u wan tto proceed?"
+    stage ('Build'){
+      steps {
+        sh 'echo Building'
       }
     }
     stage ('Test'){
-      parallel {
-        stage('Unit'){
-          steps {
-            echo "Unit testing"
-          }
-        }
-        stage ('Itegration'){
-          steps {
-            echo "Integration Testing"
-          }
-        }
+      steps {
+        sh 'echo Testing'
+      }
+    }
+
+    post {
+      sucess {
+        echo 'All steps passed'
+      }
+      failure {
+        echo 'Failed'
       }
     }
   }
-}
