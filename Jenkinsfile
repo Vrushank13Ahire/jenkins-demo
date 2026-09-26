@@ -22,7 +22,7 @@ pipeline{
   }
 
     post {
-      sucess {
+      success {
         echo 'All steps passed'
       }
       failure {
