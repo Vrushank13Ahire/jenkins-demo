@@ -19,6 +19,7 @@ pipeline{
         sh 'echo Testing'
       }
     }
+  }
 
     post {
       sucess {
