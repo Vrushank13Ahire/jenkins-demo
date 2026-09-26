@@ -1,39 +1,22 @@
 pipeline {
-  agent any
-  parameters{
-    choice( name: 'ENVIRONMENT' , choices: ['staging', 'production'], description: 'Target')
-  }
+  agent any 
   stages {
-    stage ('Checkout SCM'){
+    stage ('Build') {
       steps {
-        checkout scm
+        echo "Building"
       }
     }
-    stage ('Test') {
+    stage ('Test'){
       parallel {
-        stage('Unit') { steps { sh 'echo Unit Testing'}}
-        stage('Integration') { steps { sh 'echo Integration Testing'}}
+        stage('Unit'){
+          steps {
+            echo "Unit testing"
+          }
+        }
+        stage ('Itegration'){
+          steps {
+            echo "Integration Testing"
+          }
+        }
       }
     }
-    stage('Approve'){
-      steps {
-        input message :"Deploy to production"
-      }
-    }
-    stage('Deploy') {
-      steps {
-        sh "echo Deploying to ${params.ENVIRONMENT}" 
-      }
-    }
-  }
-
-
-post {
-  success {
-    echo "Pipeline success"
-  }
-  failure {
-    echo "pipeline Failed"
-  }
-}
-}
