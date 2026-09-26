@@ -1,15 +1,12 @@
 pipeline {
   agent any
-  environment{
-    APP_NAME ='demo'
+  parameters{
+    choice( name: 'ENVIRONMENT' , choices: {'staging', 'production'}, description: 'Target')
   }
   stages {
-    stage('Build') {
-        environment{
-            BUILD_MODE ='production'
-       }
+    stage('Deploy') {
       steps {
-        sh 'echo Building $APP_NAME $BUILD_MODE' 
+        sh 'echo Deploying to ${params.ENVIRONMENT}' 
       }
     }
   }
