@@ -10,6 +10,11 @@ pipeline {
         stage('Integration') { steps { sh 'echo Integration Testing'}}
       }
     }
+    stage('Approve'){
+      steps {
+        input message :"Deploy to production"
+      }
+    }
     stage('Deploy') {
       steps {
         sh "echo Deploying to ${params.ENVIRONMENT}" 
