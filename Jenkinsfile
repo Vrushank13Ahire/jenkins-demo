@@ -6,6 +6,11 @@ pipeline {
         echo "Building"
       }
     }
+    stage ('Approve'){
+      steps{
+        input message: "Do u wan tto proceed?"
+      }
+    }
     stage ('Test'){
       parallel {
         stage('Unit'){
