@@ -4,6 +4,12 @@ pipeline {
     choice( name: 'ENVIRONMENT' , choices: ['staging', 'production'], description: 'Target')
   }
   stages {
+    stage ('Test') {
+      parallel {
+        stage('Unit') { steps { sh 'echo Unit Testing'}}
+        stage('Integration') { steps { sh 'echo Integration Testing'}}
+      }
+    }
     stage('Deploy') {
       steps {
         sh "echo Deploying to ${params.ENVIRONMENT}" 
